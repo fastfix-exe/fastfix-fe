@@ -1,0 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Blinker:wght@300;400&family=Open+Sans:wght@300;400&family=Public+Sans:wght@300&display=swap");
+@import "tailwindcss/base";
+
+@layer base {
+  h1 {
+    @apply text-2xl;
+  }
+  h2 {
+    @apply text-xl;
+  }
+  h3 {
+    @apply text-lg;
+  }
+}
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Blinker", "Public Sans", "Open Sans", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
