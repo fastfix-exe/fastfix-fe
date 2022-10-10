@@ -1,5 +1,3 @@
-// import mechanic_1 from "./Pictures/mechanic_1.png";
-// import mechanic_2 from "./Pictures/mechanic_2.png";
 import Login from "./Pages/Auth/Login";
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import Dashboard from "./Pages/Dashboard/Dashboard";
@@ -12,6 +10,9 @@ import Navbar from "./Components/Navigator/Navbar";
 import UserProfile from "./Pages/Profile/UserProfile";
 import SearchStore from "./Pages/Search/SearchStore";
 import StoreProfile from "./Pages/Profile/StoreProfile";
+import Emergency from "./Pages/Emergency/Emergency";
+import News from "./Pages/News/News";
+import StorePersonalProfile from "./Pages/Profile/StorePersonalProfile";
 
 const App = () => {
   const navigate = useNavigate();
@@ -38,34 +39,70 @@ const App = () => {
 
   return (
     <div className="w-screen h-screen flex place-content-evenly items-center p-2 bg-screen-bg bg-cover bg-center bg-no-repeat lg:p-0">
-      {/* <div className="w-96 h-96 flex justify-center lg:hidden">
-        <img src={mechanic_2} alt="mechanic_1" />
-      </div> */}
       <div className="relative p-2 aspect-[9/16] h-full border-slate-600 border-2 bg-white rounded-md overflow-hidden">
+        <div className="pt-8 lg:pt-0 overflow-x-hidden overflow-y-auto scrollbar-hide h-full">
+          <Routes>
+            {user ? (
+              <>
+                {JSON.parse(user).loginUser ? (
+                  <>
+                    <Route path="/" element={<Navigate to="/dashboard" />} />
+                    <Route
+                      path="/login"
+                      element={<Navigate to="/dashboard" />}
+                    />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/search" element={<SearchStore />} />
+                    <Route path="/emergency" element={<Emergency />} />
+                    <Route path="/profile" element={<UserProfile />} />
+                    <Route path="/news" element={<News />} />
+                    <Route path="/store" element={<StoreProfile />}>
+                      <Route path=":id" element={<StoreProfile />} />
+                    </Route>
+                  </>
+                ) : (
+                  <>
+                    <Route path="/" element={<Navigate to="/dashboard" />} />
+                    <Route
+                      path="/login"
+                      element={<Navigate to="/dashboard" />}
+                    />
+                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/search" element={<SearchStore />} />
+                    <Route path="/emergency" element={<Emergency />} />
+                    <Route path="/profile" element={<StorePersonalProfile />} />
+                    <Route path="/news" element={<News />} />
+                    <Route path="/store" element={<StoreProfile />}>
+                      <Route path=":id" element={<StoreProfile />} />
+                    </Route>
+                  </>
+                )}
+              </>
+            ) : (
+              <>
+                <Route path="/" element={<Navigate to="/login" />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="*" element={<Login />} />
+              </>
+            )}
+          </Routes>
+        </div>
+
         <div className="flex items-center w-full absolute left-1/2 top-0 -translate-x-1/2 lg:hidden bg-white">
           <div className="w-1/5 text-center">{time}</div>
-          <div className="h-8 bg-black rounded-b-xl w-3/5"></div>
+          <div className="h-8 bg-black rounded-b-xl w-3/5 z-50"></div>
           <div className="flex justify-evenly w-1/5">
             <AiFillSignal />
             <BsWifi />
             <BsBatteryFull />
           </div>
         </div>
-        
-        <div className="pt-8 lg:pt-0 overflow-x-hidden overflow-y-auto scrollbar-hide h-full">
-          <Routes>
-            <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/search" element={<SearchStore />} />
-            <Route path="/profile" element={<UserProfile />} />
-            <Route path="/store" element={<StoreProfile />}>
-              <Route path=":id" element={<StoreProfile />} />
-            </Route>
-          </Routes>
-        </div>
 
-        <div className={window.location.pathname.includes("/login") ? "hidden": ""}>
+        <div
+          className={
+            window.location.pathname.includes("/login") ? "hidden" : ""
+          }
+        >
           <Navbar />
         </div>
 
@@ -76,9 +113,6 @@ const App = () => {
           ></div>
         </div>
       </div>
-      {/* <div className="w-96 h-96 lg:hidden flex justify-center">
-        <img src={mechanic_1} alt="mechanic_1" />
-      </div> */}
     </div>
   );
 };

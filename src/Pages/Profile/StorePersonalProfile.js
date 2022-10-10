@@ -8,13 +8,13 @@ import { userAction } from "../../Store/Slice/userSlice";
 import { FaUserEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-const UserProfile = () => {
+const StorePersonalProfile = () => {
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [disabled, setDisabled] = useState(true);
   const [appUser, setAppUser] = useState({
-    customerName: "",
+    storeName: "",
     dateOfBirth: "",
     gender: 0,
     phoneNumber: "",
@@ -32,7 +32,7 @@ const UserProfile = () => {
         dispatch(userAction.logout());
         navigate("/login");
       } else {
-        console.log("Log out failed");
+        alert("Log out failed");
       }
     } catch (error) {
       console.log(error);
@@ -49,31 +49,16 @@ const UserProfile = () => {
     });
   };
 
-  const updateUser = async () => {
-    setDisabled(true);
-    // try {
-    //   const response = await userApi.updateCustomer(appUser);
-    //   if (response?.status === 200) {
-    //     dispatch(userAction.login(response.data));
-    //   } else {
-    //     console.log("Update failed");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log(appUser);
-  };
-
   useEffect(() => {
     if (user) {
       setAppUser({
-        customerName: user.loginUser.customerName,
-        dateOfBirth: user.loginUser.dateOfBirth,
-        gender: user.loginUser.gender,
-        phoneNumber: user.loginUser.phoneNumber,
-        avatarPicture: user.loginUser.avatarPicture,
-        refreshToken: user.loginUser.refreshToken,
-        email: user.loginUser.email,
+        customerName: user.loginStore.customerName,
+        dateOfBirth: user.loginStore.dateOfBirth,
+        gender: user.loginStore.gender,
+        phoneNumber: user.loginStore.phoneNumber,
+        avatarPicture: user.loginStore.avatarPicture,
+        refreshToken: user.loginStore.refreshToken,
+        email: user.loginStore.email,
       });
     }
   }, [user]);
@@ -100,13 +85,13 @@ const UserProfile = () => {
           <h1 className="text-center py-4">User Information</h1>
           <div className="flex justify-center">
             <img
-              className="rounded-full"
+              className="rounded-full h-32"
               src={appUser.avatarPicture}
               alt="avatar"
             />
           </div>
           <div className="text-center">
-            <h2>{appUser.customerName}</h2>
+            <h2>{appUser.storeName}</h2>
           </div>
           <div className="my-10">
             <div>
@@ -169,4 +154,4 @@ const UserProfile = () => {
   );
 };
 
-export default UserProfile;
+export default StorePersonalProfile;
