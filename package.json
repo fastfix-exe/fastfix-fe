@@ -39,7 +39,7 @@
     ]
   },
   "browserslist": [
-    "default",
+    "defaults",
     "not ie 11"
   ],
   "devDependencies": {
