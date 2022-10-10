@@ -84,7 +84,7 @@ const StoreProfile = () => {
                   <div className="text-2xl font-medium">Information</div>
                   <hr />
                   <div
-                    className="flex items-center text-xl py-4 cursor-pointer hover:shadow-md"
+                    className="flex items-center text-xl py-4 cursor-pointer hover:shadow-md underline"
                     onClick={() =>
                       window.open(
                         `tel:+${store.phoneNumber}`,

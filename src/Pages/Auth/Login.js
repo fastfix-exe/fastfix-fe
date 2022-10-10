@@ -78,7 +78,10 @@ const Login = () => {
       <div className="flex justify-center">
         <img src={logo} alt="logo" className="w-24 h-auto" />
       </div>
-      <div className="mt-10">
+      <div className="mt-3 text-center">
+        <h3>Login as store</h3>
+      </div>
+      <div className="mt-3">
         <div className="h-24">
           <TextInput
             placeholder="Enter your email"
@@ -96,14 +99,14 @@ const Login = () => {
           />
         </div>
         <div className="flex items-center justify-around mt-10">
-          <hr className="w-40 border-none h-px bg-black" />
-          <h1>or</h1>
-          <hr className="w-40 border-none h-px bg-black" />
+          <hr className="w-32 border-none h-px bg-black" />
+          <h3>or as driver</h3>
+          <hr className="w-32 border-none h-px bg-black" />
         </div>
         <div className="mt-10">
           <div className="flex justify-center" id="SigninGoogle"></div>
         </div>
-        <div className="mt-28">
+        <div className="mt-20">
           <ConfirmButton text="Login" onClick={storeLogin} />
         </div>
         <div className="mt-4 flex justify-center">
