@@ -28,43 +28,9 @@ const Login = () => {
     });
   };
 
-  const login = async () => {
-    try {
-      const response = await userApi.login();
-      if (response?.status === 200) {
-        const tmpUser = {
-          loginUser: {
-            role: 1,
-            id: "ae7f5ae3fa96ea9fea908e19fbd49f93",
-            email: "haotnse150755@fpt.edu.vn",
-            customerName: "Tran Nhi Hao",
-            isDeleted: false,
-            dateOfBirth: null,
-            gender: null,
-            phoneNumber: null,
-            avatarPicture:
-              "https://lh3.googleusercontent.com/a/ALm5wu0YpWe8Kz28J1rrdHBaJXwOK07bKxpMhq43Hf1w=s96-c",
-          },
-          tokens: {
-            accessToken:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoxLCJpZCI6ImFlN2Y1YWUzZmE5NmVhOWZlYTkwOGUxOWZiZDQ5ZjkzIiwiZW1haWwiOiJoYW90bnNlMTUwNzU1QGZwdC5lZHUudm4iLCJjdXN0b21lck5hbWUiOiJUcmFuIE5oaSBIYW8iLCJpc0RlbGV0ZWQiOmZhbHNlLCJkYXRlT2ZCaXJ0aCI6bnVsbCwiZ2VuZGVyIjpudWxsLCJwaG9uZU51bWJlciI6bnVsbCwiYXZhdGFyUGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FMbTV3dTBZcFdlOEt6MjhKMXJyZEhCYUpYd09LMDdiS3hwTWhxNDNIZjF3PXM5Ni1jIiwiaWF0IjoxNjYzODI3MzAxLCJleHAiOjE2NjM4MjgyMDF9.fb0qNgVo2Y_GwzKpGhYWiH78Fq7UrwB3KHwV0bl5JSc",
-            refreshToken:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoxLCJpZCI6ImFlN2Y1YWUzZmE5NmVhOWZlYTkwOGUxOWZiZDQ5ZjkzIiwiZW1haWwiOiJoYW90bnNlMTUwNzU1QGZwdC5lZHUudm4iLCJjdXN0b21lck5hbWUiOiJUcmFuIE5oaSBIYW8iLCJpc0RlbGV0ZWQiOmZhbHNlLCJkYXRlT2ZCaXJ0aCI6bnVsbCwiZ2VuZGVyIjpudWxsLCJwaG9uZU51bWJlciI6bnVsbCwiYXZhdGFyUGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FMbTV3dTBZcFdlOEt6MjhKMXJyZEhCYUpYd09LMDdiS3hwTWhxNDNIZjF3PXM5Ni1jIiwiaWF0IjoxNjYzODI3MzAxfQ.VD_Lt9nr4DQKyjEsqwfCVKentkfgW5uZ7kSz29FjHz4",
-          },
-        };
-        dispatch(userAction.login(tmpUser));
-        navigate("/dashboard");
-      } else {
-        console.log("Fail to login");
-      }
-    } catch (error) {
-      console.log("Login: " + error);
-    }
-  };
 
   const loginGoogle = async (response) => {
     const creadentialId = response.credential;
-    console.log(creadentialId);
     try {
       const response = await userApi.loginWithGoogle({
         credentialId: creadentialId,
@@ -84,10 +50,10 @@ const Login = () => {
     try {
       const response = await userApi.loginAsStore(user);
       if (response?.status === 200) {
-        dispatch(userAction.login(user));
+        dispatch(userAction.login(response.data));
         navigate("/dashboard");
       } else {
-        console.log("Fail to login");
+        alert("Fail to login");
       }
     } catch (error) {
       console.log("Login: " + error);
@@ -103,7 +69,6 @@ const Login = () => {
     google.accounts.id.renderButton(document.getElementById("SigninGoogle"), {
       theme: "outline",
       size: "large",
-      width: 400,
     });
   }, []);
 
@@ -136,8 +101,7 @@ const Login = () => {
           <hr className="w-40 border-none h-px bg-black" />
         </div>
         <div className="mt-10">
-          {/* <GoogleButton text="Login with google" /> */}
-          <div className="w-full" id="SigninGoogle"></div>
+          <div className="flex justify-center" id="SigninGoogle"></div>
         </div>
         <div className="mt-28">
           <ConfirmButton text="Login" onClick={storeLogin} />

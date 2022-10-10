@@ -5,7 +5,7 @@ const UserCard = (props) => {
         <img src={props.user.avatarPicture} alt="avatar" />
       </div>
       <div className="ml-2">
-        <div>{props.user.customerName}</div>
+        <div>{props.user.customerName ? props.user.customerName : props.user.storeName}</div>
         <div>{props.user.email}</div>
       </div>
     </div>
