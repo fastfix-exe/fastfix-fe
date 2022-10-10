@@ -4,7 +4,7 @@ import TextInput from "../../Components/Input/TextInput";
 import { useEffect, useState } from "react";
 import userApi from "../../API/Services/userApi";
 import StoreCard from "../../Components/Card/StoreCard";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user.user);
@@ -17,9 +17,16 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const getStores = async () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      getStores({
+        longtitude: position.coords.longitude,
+        latitude: position.coords.latitude,
+      });
+    });
+
+    const getStores = async (position) => {
       try {
-        const response = await userApi.getStores();
+        const response = await userApi.getStores(position);
         if (response?.status === 200) {
           setStores(response.data);
         } else {
@@ -29,7 +36,6 @@ const Dashboard = () => {
         console.log(error);
       }
     };
-    getStores();
   }, []);
 
   return (
@@ -40,7 +46,8 @@ const Dashboard = () => {
       <hr className="mb-1" />
       {user && (
         <div className="mb-4">
-          <UserCard user={user.loginUser} />
+          {user.loginUser ? <UserCard user={user.loginUser} /> : <UserCard user={user.loginStore} /> }
+          
         </div>
       )}
       <div>
