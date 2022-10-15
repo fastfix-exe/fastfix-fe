@@ -151,16 +151,12 @@ const UserProfile = () => {
           </div>
           <hr />
           <div className="mb-20">
-            <div className="flex rounded-md shadow-md hover:shadow-lg p-2 items-center cursor-pointer mb-4">
-              <AiFillSetting className="mr-2 text-3xl" />
-              <h1 className="text-2xl">Settings</h1>
-            </div>
             <div
-              className="flex rounded-md shadow-md hover:shadow-lg p-2 items-center cursor-pointer mb-4"
+              className="flex rounded-md shadow-md hover:shadow-lg p-2 items-center cursor-pointer mb-4 text-red-600"
               onClick={logOut}
             >
               <BsArrowReturnLeft className="mr-2 text-3xl" />
-              <h1 className="text-2xl">Log out</h1>
+              <h1 className="text-2xl ">Log out</h1>
             </div>
           </div>
         </div>

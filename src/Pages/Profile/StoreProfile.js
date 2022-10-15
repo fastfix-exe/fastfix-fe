@@ -15,7 +15,6 @@ import { MdLocationOn } from "react-icons/md";
 import UserMap from "../../Components/UserMap/UserMap";
 import { useSelector } from "react-redux";
 import TextInput from "../../Components/Input/TextInput";
-import ConfirmButton from "../../Components/Button/ConfirmButton";
 
 const StoreProfile = () => {
   const user = useSelector((state) => state.user.user);
@@ -24,6 +23,8 @@ const StoreProfile = () => {
   const [rating, setRating] = useState();
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
+  const [thanks, setThanks] = useState(false);
+  const [star, setStar] = useState(0);
   let params = useParams();
 
   const [openMap, setOpenMap] = useState(false);
@@ -51,12 +52,49 @@ const StoreProfile = () => {
       });
       if (response?.status === 200) {
         console.log(response.data);
-        setComments(response.data)
+        setComments(response.data);
       }
     } catch (error) {
       console.log(error);
     }
     setComment("");
+  };
+
+  const getCurrentRating = async () => {
+    try {
+      const response = await userApi.getCurrentRating({
+        storeId: params.id,
+      });
+      if (response?.status === 200) {
+        setStar(response.data);
+        if (response.data > 0) {
+          setThanks(true);
+        } else {
+          setThanks(false);
+        }
+      } else {
+        setRating(0);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const ratingStore = async (data) => {
+    setThanks(false);
+    try {
+      const response = await userApi.ratingStore({
+        storeId: params.id,
+        rating: data,
+      });
+      if (response?.status == 200) {
+        setThanks(true);
+      } else {
+        console.log("Rating failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -104,6 +142,8 @@ const StoreProfile = () => {
     checkData();
 
     getComments();
+
+    getCurrentRating();
   }, []);
 
   return (
@@ -124,7 +164,7 @@ const StoreProfile = () => {
                   />
                 </div>
                 <div>
-                  <div className="text-center text-3xl font-bold">
+                  <div className="text-center text-3xl font-bold my-5">
                     {store.storeName.toUpperCase()}
                   </div>
                   <div className="flex justify-center">
@@ -186,6 +226,24 @@ const StoreProfile = () => {
                 </div>
                 <hr />
                 <div className="mt-1">
+                  {thanks ? (
+                    <div className="text-center text-red-600">
+                      Thanks for your rating
+                    </div>
+                  ) : (
+                    <div className="text-center">Rating this store</div>
+                  )}
+                  <div className="flex justify-center py-2">
+                    <ReactStars
+                      size={30}
+                      count={5}
+                      isHalf={false}
+                      value={star}
+                      emptyIcon={<AiOutlineStar />}
+                      filledIcon={<AiTwotoneStar />}
+                      onChange={ratingStore}
+                    />
+                  </div>
                   <div className="flex items-center">
                     <div className="mr-2">
                       <img
@@ -214,9 +272,12 @@ const StoreProfile = () => {
                 <div>
                   {comments &&
                     comments.length > 0 &&
-                    comments.map((comment) => {
+                    comments.map((comment, index) => {
                       return (
-                        <div className="flex items-center gap-2 my-4">
+                        <div
+                          key={index}
+                          className="flex items-center gap-2 my-4"
+                        >
                           <div>
                             <img
                               className="rounded-full w-12"
