@@ -112,8 +112,13 @@ const userApi = {
     const url = `customer/store/rating/${data.storeId}`;
     return axiosClient.get(url, {
       rating: data.rating,
-    });
+    })
   },
+
+  getSubs: () => {
+    const url = "subcription/list";
+    return axiosClient.get(url);
+  }
 };
 
 export default userApi;

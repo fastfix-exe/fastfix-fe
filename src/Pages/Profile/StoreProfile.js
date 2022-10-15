@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import userApi from "../../API/Services/userApi";
 import { BsStarHalf, BsLink45Deg } from "react-icons/bs";
@@ -16,6 +16,15 @@ import UserMap from "../../Components/UserMap/UserMap";
 import { useSelector } from "react-redux";
 import TextInput from "../../Components/Input/TextInput";
 
+const customStar = {
+  size: 30,
+  isHalf: true,
+  edit: false,
+  emptyIcon: <AiOutlineStar />,
+  halfIcon: <BsStarHalf />,
+  filledIcon: <AiTwotoneStar />,
+};
+
 const StoreProfile = () => {
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
@@ -30,15 +39,6 @@ const StoreProfile = () => {
   const [openMap, setOpenMap] = useState(false);
   const [lng, setLng] = useState(0);
   const [lat, setLat] = useState(0);
-
-  const customStar = {
-    size: 30,
-    isHalf: true,
-    edit: false,
-    emptyIcon: <AiOutlineStar />,
-    halfIcon: <BsStarHalf />,
-    filledIcon: <AiTwotoneStar />,
-  };
 
   const getComment = (e) => {
     setComment(e.target.value);
@@ -60,26 +60,6 @@ const StoreProfile = () => {
     setComment("");
   };
 
-  const getCurrentRating = async () => {
-    try {
-      const response = await userApi.getCurrentRating({
-        storeId: params.id,
-      });
-      if (response?.status === 200) {
-        setStar(response.data);
-        if (response.data > 0) {
-          setThanks(true);
-        } else {
-          setThanks(false);
-        }
-      } else {
-        setRating(0);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const ratingStore = async (data) => {
     setThanks(false);
     try {
@@ -87,7 +67,7 @@ const StoreProfile = () => {
         storeId: params.id,
         rating: data,
       });
-      if (response?.status == 200) {
+      if (response?.status === 200) {
         setThanks(true);
       } else {
         console.log("Rating failed");
@@ -139,11 +119,32 @@ const StoreProfile = () => {
       }
     };
 
+    const getCurrentRating = async () => {
+      try {
+        const response = await userApi.getCurrentRating({
+          storeId: params.id,
+        });
+        if (response?.status === 200) {
+          setStar(response.data);
+          if (response.data > 0) {
+            setThanks(true);
+          } else {
+            setThanks(false);
+          }
+        } else {
+          setRating(0);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     checkData();
 
     getComments();
 
     getCurrentRating();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -235,6 +236,7 @@ const StoreProfile = () => {
                   )}
                   <div className="flex justify-center py-2">
                     <ReactStars
+                      key={`stars_${star}`}
                       size={30}
                       count={5}
                       isHalf={false}

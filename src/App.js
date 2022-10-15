@@ -14,6 +14,7 @@ import Emergency from "./Pages/Emergency/Emergency";
 import News from "./Pages/News/News";
 import StorePersonalProfile from "./Pages/Profile/StorePersonalProfile";
 import jwt_decode from "jwt-decode";
+import StoreDashboard from "./Pages/Dashboard/StoreDashboard";
 
 const App = () => {
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ const App = () => {
     } else {
       navigate("/login");
     }
-  }, [user]);
+  }, [user, dispatch, navigate]);
 
   return (
     <div className="w-screen h-screen flex place-content-evenly items-center p-2 bg-screen-bg bg-cover bg-center bg-no-repeat lg:p-0">
@@ -74,7 +75,7 @@ const App = () => {
                       path="/login"
                       element={<Navigate to="/dashboard" />}
                     />
-                    <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/dashboard" element={<StoreDashboard />} />
                     <Route path="/search" element={<SearchStore />} />
                     <Route path="/emergency" element={<Emergency />} />
                     <Route path="/profile" element={<StorePersonalProfile />} />
@@ -111,6 +112,7 @@ const App = () => {
           }
         >
           <Navbar />
+          
         </div>
 
         <div className="left-1/2 bottom-1 -translate-x-1/2 absolute lg:hidden cursor-pointer">

@@ -38,7 +38,7 @@ const StoreCardRow = (props) => {
   const acceptEmergencyCalling = async () => {
     try {
       const currentUser = JSON.parse(user).loginUser;
-
+      console.log(JSON.parse(user));
       const responseComment = await userApi.sendEmergencyRequest({
         userId: currentUser.id,
         storeId: props.store.id,
