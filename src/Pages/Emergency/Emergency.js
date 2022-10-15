@@ -56,6 +56,7 @@ const Emergency = () => {
                     return <StoreCardEmergency key={store.id} store={store} />;
                   }
                 }
+                return <></>;
               })}
           </div>
         </div>

@@ -86,6 +86,11 @@ const userApi = {
     return axiosClient.get(url, {
       rating: data.rating,
     })
+  },
+
+  getSubs: () => {
+    const url = "subcription/list";
+    return axiosClient.get(url);
   }
 };
 

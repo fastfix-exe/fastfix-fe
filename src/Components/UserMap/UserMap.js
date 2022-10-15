@@ -10,7 +10,7 @@ const UserMap = (props) => {
     longitude: 0,
     latitude: 0,
   });
-  const [viewPort, setViewPort] = useState({
+  const [viewPort] = useState({
     longitude: props.lng,
     latitude: props.lat,
     zoom: 15,
@@ -117,7 +117,7 @@ const UserMap = (props) => {
         <NavigationControl position="bottom-right" />
       </Map>
       <div className="absolute bottom-0 left-0 w-full h-40 bg-white p-1 rounded-t-xl">
-        <div className="flex items-center">
+        <div className="flex items-center mt-8">
           <div className="rounded-full w-16 overflow-hidden mr-2">
             <img src={props.store.avatarPicture} alt="a" />
           </div>

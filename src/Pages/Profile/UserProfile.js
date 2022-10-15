@@ -1,18 +1,15 @@
 import { useDispatch, useSelector } from "react-redux";
 import TextInput from "../../Components/Input/TextInput";
-import { AiFillSetting, AiFillCheckCircle } from "react-icons/ai";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import userApi from "../../API/Services/userApi";
 import { userAction } from "../../Store/Slice/userSlice";
-import { FaUserEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 const UserProfile = () => {
   const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [disabled, setDisabled] = useState(true);
   const [appUser, setAppUser] = useState({
     customerName: "",
     dateOfBirth: "",
@@ -47,21 +44,6 @@ const UserProfile = () => {
         [name]: value,
       };
     });
-  };
-
-  const updateUser = async () => {
-    setDisabled(true);
-    // try {
-    //   const response = await userApi.updateCustomer(appUser);
-    //   if (response?.status === 200) {
-    //     dispatch(userAction.login(response.data));
-    //   } else {
-    //     console.log("Update failed");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    console.log(appUser);
   };
 
   useEffect(() => {
@@ -124,7 +106,7 @@ const UserProfile = () => {
                 placeholder="date of birth"
                 name="dateOfBirth"
                 value={appUser.dateOfBirth ? appUser.dateOfBirth : "Not set"}
-                disabled={disabled}
+                disabled={true}
                 onChange={getData}
               />
             </div>
@@ -134,7 +116,7 @@ const UserProfile = () => {
                 placeholder="gender"
                 name="gender"
                 value={appUser.gender ? appUser.gender : "Not set"}
-                disabled={disabled}
+                disabled={true}
                 onChange={getData}
               />
             </div>
@@ -144,7 +126,7 @@ const UserProfile = () => {
                 placeholder="phoneNumber"
                 name="phoneNumber"
                 value={appUser.phoneNumber ? appUser.phoneNumber : "Not set"}
-                disabled={disabled}
+                disabled={true}
                 onChange={getData}
               />
             </div>
