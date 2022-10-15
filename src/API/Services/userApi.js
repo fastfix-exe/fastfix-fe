@@ -72,6 +72,20 @@ const userApi = {
   getStoreComment: (data) => {
     const url = `user/store/comment/${data.storeId}`;
     return axiosClient.get(url);
+  },
+
+  ratingStore: (data) => {
+    const url = `customer/store/rating/${data.storeId}`;
+    return axiosClient.post(url, {
+      rating: data.rating,
+    })
+  },
+
+  getCurrentRating: (data) => {
+    const url = `customer/store/rating/${data.storeId}`;
+    return axiosClient.get(url, {
+      rating: data.rating,
+    })
   }
 };
 
