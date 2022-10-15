@@ -9,6 +9,7 @@ const StoreEmergency = () => {
   const [requests, setRequests] = useState([]);
   const [employees, setEmployees] = useState([]);
   const [popup, setPopup] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState();
 
   useEffect(() => {
     const getRequests = async () => {
@@ -51,6 +52,34 @@ const StoreEmergency = () => {
     getEmployees();
   }, [user]);
 
+  const onSelectRequest = (data) => {
+    setPopup(true);
+    setSelectedRequestId(data);
+  };
+
+  const onAssignEmployee = async (data) => {
+    // ASSGIN EMPLOYEE
+    try {
+
+      const responseComment = await userApi.assignEmployee({
+        requestId: selectedRequestId,
+        employeeId: data,
+      });
+      if (responseComment?.status === 200) {
+        clearData();
+      } else {
+        console.log("No comment");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const clearData = () => {
+    setSelectedRequestId();
+    setPopup(false);
+  };
+
   return (
     <div>
       <div className="mt-2 mb-4">
@@ -63,14 +92,25 @@ const StoreEmergency = () => {
       {popup ? (
         <>
           <div>
-            <div className="text-orange text-left text-sm cursor-pointer" onClick={() => setPopup(false)}>Back</div>
+            <div
+              className="text-orange text-left text-sm cursor-pointer"
+              onClick={clearData}
+            >
+              Back
+            </div>
           </div>
           <div>
             {employees &&
               employees.length > 0 &&
               employees.map((employee, index) => {
                 if (employee.currentRequestId === null) {
-                  return <EmployeeCard key={index} employee={employee} />;
+                  return (
+                    <EmployeeCard
+                      onAssignEmployee={onAssignEmployee}
+                      key={index}
+                      employee={employee}
+                    />
+                  );
                 }
                 return <></>;
               })}
@@ -84,7 +124,7 @@ const StoreEmergency = () => {
               return (
                 <RequestCard
                   key={index}
-                  onClick={() => setPopup(true)}
+                  onClick={() => onSelectRequest(request.id)}
                   request={request}
                 />
               );
