@@ -99,7 +99,7 @@ const StoreCardRow = (props) => {
               {!props.isCalling && (
                 <button
                   onClick={onCallStore}
-                  className="rounded-md bg-orange text-white p-1 hover:shadow-md"
+                  className="rounded-md bg-orange text-white p-1 hover:shadow-md text-sm"
                 >
                   Call now
                 </button>
