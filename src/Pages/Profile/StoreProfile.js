@@ -166,7 +166,7 @@ const StoreProfile = () => {
                 </div>
                 <div>
                   <div className="text-center text-3xl font-bold my-5">
-                    {store.storeName.toUpperCase()}
+                    {store.storeName ? store.storeName.toUpperCase() : store.employeeName.toUpperCase()}
                   </div>
                   <div className="flex justify-center">
                     <ReactStars {...rating} />
