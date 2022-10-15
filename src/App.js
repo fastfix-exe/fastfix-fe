@@ -13,6 +13,7 @@ import StoreProfile from "./Pages/Profile/StoreProfile";
 import Emergency from "./Pages/Emergency/Emergency";
 import News from "./Pages/News/News";
 import StorePersonalProfile from "./Pages/Profile/StorePersonalProfile";
+import jwt_decode from "jwt-decode";
 
 const App = () => {
   const navigate = useNavigate();
@@ -31,6 +32,12 @@ const App = () => {
 
   useEffect(() => {
     if (user) {
+      var decoded = jwt_decode(JSON.parse(user).tokens.accessToken);
+      var expiredDate = new Date(decoded.exp * 1000);
+      var toDay = new Date();
+      if(toDay >= expiredDate){
+        dispatch(userAction.logout());
+      }
       dispatch(userAction.login(JSON.parse(user)));
     } else {
       navigate("/login");
