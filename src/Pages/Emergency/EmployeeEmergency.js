@@ -59,7 +59,6 @@ const EmployeeEmergency = ({ socket }) => {
   }, [socket]);
 
   useEffect(() => {
-    
     setInterval(async () => {
       if (isHasRequest || user.loginStore.currentRequestId) {
         try {
@@ -87,6 +86,18 @@ const EmployeeEmergency = ({ socket }) => {
     }, 10000);
   }, []);
 
-  return <div>{loadCord && <EmployeeMap lng={lng} lat={lat} />}</div>;
+  return (
+    <div>
+      <>
+        {loadCord ? (
+          <EmployeeMap lng={lng} lat={lat} />
+        ) : (
+          <div className="h-96 flex items-center justify-center">
+            <h1 className="text-2xl text-center">No requests</h1>
+          </div>
+        )}
+      </>
+    </div>
+  );
 };
 export default EmployeeEmergency;
