@@ -1,11 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import TextInput from "../../Components/Input/TextInput";
-import { AiFillSetting, AiFillCheckCircle } from "react-icons/ai";
 import { BsArrowReturnLeft } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import userApi from "../../API/Services/userApi";
 import { userAction } from "../../Store/Slice/userSlice";
-import { FaUserEdit } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 const StorePersonalProfile = () => {
@@ -67,21 +65,6 @@ const StorePersonalProfile = () => {
     <>
       {user && (
         <div>
-          {/* {disabled ? (
-            <div
-              className="absolute right-2 top-10 flex justify-center text-2xl cursor-pointer hover:shadow-md rounded-full p-1"
-              onClick={() => setDisabled(false)}
-            >
-              <FaUserEdit />
-            </div>
-          ) : (
-            <div
-              className="absolute right-2 top-10 flex justify-center text-2xl cursor-pointer hover:shadow-md rounded-full p-1 bg-orange text-white"
-              onClick={updateUser}
-            >
-              <AiFillCheckCircle />
-            </div>
-          )} */}
           <h1 className="text-center py-4">User Information</h1>
           <div className="flex justify-center">
             <img
@@ -136,10 +119,6 @@ const StorePersonalProfile = () => {
           </div>
           <hr />
           <div className="mb-20">
-            <div className="flex rounded-md shadow-md hover:shadow-lg p-2 items-center cursor-pointer mb-4">
-              <AiFillSetting className="mr-2 text-3xl" />
-              <h1 className="text-2xl">Settings</h1>
-            </div>
             <div
               className="flex rounded-md shadow-md hover:shadow-lg p-2 items-center cursor-pointer mb-4"
               onClick={logOut}

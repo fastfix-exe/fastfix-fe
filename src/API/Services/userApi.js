@@ -118,6 +118,16 @@ const userApi = {
   getSubs: () => {
     const url = "subcription/list";
     return axiosClient.get(url);
+  },
+
+  getEmergencyRequest: (data) => {
+    const url = `request/store/${data.storeId}`;
+    return axiosClient.get(url);
+  },
+
+  getEmployee: (data) => {
+    const url=`employee/list/${data.storeId}`;
+    return axiosClient.get(url);
   }
 };
 

@@ -78,28 +78,42 @@ const StoreDashboard = () => {
               </div>
             </div>
             <hr />
-            <div className="mt-4">
-              {selectedSub === 0 && (
-                <div>
-                  <SubCard sub={subs[0]} customColor="bg-gradient-to-r from-cyan-500 to-blue-500"/>
-                </div>
-              )}
-              {selectedSub === 1 && (
-                <div>
-                  <SubCard sub={subs[1]} customColor="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"/>
-                </div>
-              )}
-              {selectedSub === 2 && (
-                <div>
-                  <SubCard sub={subs[2]} customColor="bg-gradient-to-r from-amber-400 to-amber-600"/>
-                </div>
-              )}
-              {selectedSub === 3 && (
-                <div>
-                  <SubCard sub={subs[3]} customColor="bg-gradient-to-r from-red-700 to-red-400"/>
-                </div>
-              )}
-            </div>
+            {subs && subs.length > 0 && (
+              <div className="mt-4">
+                {selectedSub === 0 && (
+                  <div>
+                    <SubCard
+                      sub={subs[0]}
+                      customColor="bg-gradient-to-r from-cyan-500 to-blue-500"
+                    />
+                  </div>
+                )}
+                {selectedSub === 1 && (
+                  <div>
+                    <SubCard
+                      sub={subs[1]}
+                      customColor="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500"
+                    />
+                  </div>
+                )}
+                {selectedSub === 2 && (
+                  <div>
+                    <SubCard
+                      sub={subs[2]}
+                      customColor="bg-gradient-to-r from-amber-400 to-amber-600"
+                    />
+                  </div>
+                )}
+                {selectedSub === 3 && (
+                  <div>
+                    <SubCard
+                      sub={subs[3]}
+                      customColor="bg-gradient-to-r from-red-700 to-red-400"
+                    />
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

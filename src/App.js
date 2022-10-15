@@ -15,6 +15,7 @@ import News from "./Pages/News/News";
 import StorePersonalProfile from "./Pages/Profile/StorePersonalProfile";
 import jwt_decode from "jwt-decode";
 import StoreDashboard from "./Pages/Dashboard/StoreDashboard";
+import StoreEmergency from "./Pages/Emergency/StoreEmergency";
 
 const App = () => {
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const App = () => {
                     />
                     <Route path="/dashboard" element={<StoreDashboard />} />
                     <Route path="/search" element={<SearchStore />} />
-                    <Route path="/emergency" element={<Emergency />} />
+                    <Route path="/emergency" element={<StoreEmergency />} />
                     <Route path="/profile" element={<StorePersonalProfile />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/store" element={<StoreProfile />}>
