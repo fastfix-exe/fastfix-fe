@@ -20,9 +20,9 @@ const StoreCardRow = (props) => {
       onClick={props.onClick}
     >
       <div className="w-1/4">
-        <img src={props.store.avatarPicture} alt="" />
+        <img src={props.store.avatarPicture} alt="a" className="" />
       </div>
-      <div>
+      <div className="w-3/4">
         <div>{props.store.storeName.toUpperCase()}</div>
         <div className="flex items-center">
           <div className="mr-1 underline">{props.store.rating}</div>

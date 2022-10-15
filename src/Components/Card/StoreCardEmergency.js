@@ -24,10 +24,10 @@ const StoreCardRow = (props) => {
       <div className="w-1/4">
         <img src={props.store.avatarPicture} alt="" />
       </div>
-      <div className="w-full">
+      <div className="w-3/4">
         <div className="flex justify-between">
-          <div>{props.store.storeName.toUpperCase()}</div>
-          <div className="flex items-center text-gray-500	">
+          <div className="w-3/4">{props.store.storeName.toUpperCase()}</div>
+          <div className="flex items-center text-gray-500	w-1/4">
             <div className="mr-1">
               <MdLocationOn className="text-sm" />
             </div>
@@ -35,28 +35,39 @@ const StoreCardRow = (props) => {
           </div>
         </div>
         <div className="flex items-center">
-          <div className="mr-1 underline">{props.store.rating}</div>
-          <ReactStars {...customStar} />
-        </div>
-
-        <div className="flex justify-between items-center">
-          <div className="text-xl text-gray-500">
-            {props.store.emergency.type === "bike" ? (
-              <div>
-                <RiMotorbikeFill />
+          <div className="w-3/4">
+            <div className="flex items-center">
+              <div className="mr-1 underline">{props.store.rating}</div>
+              <ReactStars {...customStar} />
+            </div>
+            <div className="flex justify-between items-center">
+              <div className="text-xl text-gray-500">
+                {props.store.emergency.type === "bike" ? (
+                  <div>
+                    <RiMotorbikeFill />
+                  </div>
+                ) : (
+                  <div>
+                    <FaCarSide />
+                  </div>
+                )}
               </div>
-            ) : (
-              <div>
-                <FaCarSide />
-              </div>
-            )}
+            </div>
           </div>
-          <button
-            onClick={() => window.open(`tel:+${props.store.phoneNumber}`,"", "width=400,height=400")}
-            className="rounded-md bg-orange text-white p-1 hover:shadow-md"
-          >
-            Call now
-          </button>
+          <div className="w-1/4">
+            <button
+              onClick={() =>
+                window.open(
+                  `tel:+${props.store.phoneNumber}`,
+                  "",
+                  "width=400,height=400"
+                )
+              }
+              className="rounded-md bg-orange text-white p-1 hover:shadow-md"
+            >
+              Call now
+            </button>
+          </div>
         </div>
       </div>
     </div>

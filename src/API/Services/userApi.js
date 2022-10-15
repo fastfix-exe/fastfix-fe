@@ -20,10 +20,6 @@ const userApi = {
     });
   },
 
-  getAccessToken: () => {
-    const url = "auth/token";
-  },
-
   decodeAccessToken: () => {
     const url = "auth/user/profile";
     return axiosClient.get(url);
@@ -35,10 +31,6 @@ const userApi = {
       loginId: data.email,
       password: data.password,
     });
-  },
-
-  updateStore: () => {
-    const url = "store/profile";
   },
 
   updateCustomer: (data) => {
@@ -62,9 +54,25 @@ const userApi = {
   },
 
   getStoreById: (data) => {
-    const url = `customer/store/${data}`;
-    return axiosClient.get(url);
+    const url = `customer/store/${data.storeId}`;
+    return axiosClient.post(url, {
+      latitude: data.latitude,
+      longtitude: data.longtitude,
+    });
   },
+
+  postComment: (data) => {
+    const url = `user/store/comment/${data.storeId}`;
+    return axiosClient.post(url, {
+      content: data.content,
+      replyId: data.replyId,
+    });
+  },
+
+  getStoreComment: (data) => {
+    const url = `user/store/comment/${data.storeId}`;
+    return axiosClient.get(url);
+  }
 };
 
 export default userApi;
