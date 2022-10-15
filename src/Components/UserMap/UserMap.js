@@ -121,11 +121,11 @@ const UserMap = (props) => {
           <div className="rounded-full w-16 overflow-hidden mr-2">
             <img src={props.store.avatarPicture} alt="a" />
           </div>
-          <div className="mr-28">
+          <div className="w-1/2">
             <div>{props.store.storeName.toUpperCase()}</div>
             <div className="text-gray-500">{props.store.distance.toFixed(2)} Km</div>
           </div>
-          <div className="flex items-center text-orange text-2xl">
+          <div className="flex items-center text-orange text-2xl ml-2">
             <div className="bg-black rounded-full p-2 cursor-pointer" onClick={() => window.open(`tel:+${props.store.phoneNumber}`,"", "width=400,height=400")}>
               <AiFillPhone/>
             </div>
