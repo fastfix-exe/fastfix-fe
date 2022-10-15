@@ -100,6 +100,20 @@ const userApi = {
       status: data.status,
     });
   },
+
+  ratingStore: (data) => {
+    const url = `customer/store/rating/${data.storeId}`;
+    return axiosClient.post(url, {
+      rating: data.rating,
+    });
+  },
+
+  getCurrentRating: (data) => {
+    const url = `customer/store/rating/${data.storeId}`;
+    return axiosClient.get(url, {
+      rating: data.rating,
+    });
+  },
 };
 
 export default userApi;

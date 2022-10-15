@@ -44,7 +44,6 @@ const StoreCardRow = (props) => {
         storeId: props.store.id,
         status: 0,
       });
-      alert("test");
       if (responseComment?.status === 200) {
         props.changeRequestStatus(0);
       } else {
