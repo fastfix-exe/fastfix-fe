@@ -60,12 +60,14 @@ const StoreEmergency = () => {
   const onAssignEmployee = async (data) => {
     // ASSGIN EMPLOYEE
     try {
-
       const responseComment = await userApi.assignEmployee({
         requestId: selectedRequestId,
         employeeId: data,
       });
       if (responseComment?.status === 200) {
+        setRequests((prevValue) =>
+          prevValue.filter((val) => val.id !== selectedRequestId)
+        );
         clearData();
       } else {
         console.log("No comment");

@@ -41,6 +41,7 @@ const UserMap = (props) => {
         )
           .then((response) => response.json())
           .then((data) => {
+            console.log(data);
             const legs = data.routes[0].legs;
             const steps = legs[0].steps;
             const l = [];
@@ -119,7 +120,7 @@ const UserMap = (props) => {
       </Map>
       {props.store ? (
         <div className="absolute bottom-0 left-0 w-full h-40 bg-white p-1 rounded-t-xl">
-          <div className="flex items-center mt-8">
+          <div className="flex items-center mt-4">
             <div className="rounded-full w-16 overflow-hidden mr-2">
               <img src={props.store.avatarPicture} alt="a" />
             </div>

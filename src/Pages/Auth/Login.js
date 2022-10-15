@@ -51,7 +51,7 @@ const Login = () => {
       const response = await userApi.loginAsStore(user);
       if (response?.status === 200) {
         dispatch(userAction.login(response.data));
-        navigate("/dashboard");
+        navigate("/");
       } else {
         alert("Fail to login");
       }

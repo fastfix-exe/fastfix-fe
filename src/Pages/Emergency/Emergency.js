@@ -29,6 +29,10 @@ const Emergency = ({ socket }) => {
       if (response?.status === 200) {
         console.log(response);
         SetRequestStatus(-1);
+        setBike(true);
+        setShowStores(false);
+        setIsCalling(false);
+        setRequestInformation({});
       }
     } catch (error) {
       console.log(error);
@@ -93,6 +97,7 @@ const Emergency = ({ socket }) => {
         const cords = data.operator.coordinates.split(", ");
         setLat(cords[0]);
         setLng(cords[1]);
+        setLoadCord(true);
       }
       getCustomerRequest();
     });
