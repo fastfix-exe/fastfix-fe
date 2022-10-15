@@ -112,7 +112,7 @@ const userApi = {
     const url = `customer/store/rating/${data.storeId}`;
     return axiosClient.get(url, {
       rating: data.rating,
-    })
+    });
   },
 
   getSubs: () => {
@@ -126,9 +126,33 @@ const userApi = {
   },
 
   getEmployee: (data) => {
-    const url=`employee/list/${data.storeId}`;
+    const url = `employee/list/${data.storeId}`;
     return axiosClient.get(url);
-  }
+  },
+
+  changeEmployeePosition: (data) => {
+    const url = `employee/request/position`;
+    return axiosClient.post(url, {
+      coordinates: data.coordinates,
+      requestId: data.requestId,
+    });
+  },
+
+  changeCustomerPosition: (data) => {
+    const url = `customer/request/position`;
+    return axiosClient.post(url, {
+      coordinates: data.coordinates,
+      requestId: data.requestId,
+    });
+  },
+
+  assignEmployee: (data) => {
+    const url = `request/employee`;
+    return axiosClient.post(url, {
+      requestId: data.requestId,
+      employeeId: data.employeeId,
+    });
+  },
 };
 
 export default userApi;

@@ -1,4 +1,8 @@
 const EmployeeCard = (props) => {
+  const onAssignEmployee = (data) => {
+    props.onAssignEmployee(data)
+  }
+
   return (
     <div className="flex items-center justify-between shadow-md hover:shadow-lg cursor-pointer p-4 rounded-lg my-4">
       <div className="flex items-center">
@@ -12,7 +16,9 @@ const EmployeeCard = (props) => {
       </div>
 
       <div>
-        <button className="text-sm bg-orange p-2 rounded-lg text-white cursor-pointer shadow-md hover:shadow-lg ">
+        <button onClick={() => {
+          onAssignEmployee(props.employee.id)
+        }} className="text-sm bg-orange p-2 rounded-lg text-white cursor-pointer shadow-md hover:shadow-lg ">
           Assign
         </button>
       </div>

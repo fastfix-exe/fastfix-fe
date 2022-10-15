@@ -17,6 +17,10 @@ import jwt_decode from "jwt-decode";
 import StoreDashboard from "./Pages/Dashboard/StoreDashboard";
 import StoreEmergency from "./Pages/Emergency/StoreEmergency";
 
+import { io } from "socket.io-client";
+
+const socket = io("https://fastfix-core-service.herokuapp.com");
+
 const App = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -37,7 +41,7 @@ const App = () => {
       var decoded = jwt_decode(JSON.parse(user).tokens.accessToken);
       var expiredDate = new Date(decoded.exp * 1000);
       var toDay = new Date();
-      if(toDay >= expiredDate){
+      if (toDay >= expiredDate) {
         dispatch(userAction.logout());
       }
       dispatch(userAction.login(JSON.parse(user)));
@@ -62,7 +66,10 @@ const App = () => {
                     />
                     <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/search" element={<SearchStore />} />
-                    <Route path="/emergency" element={<Emergency />} />
+                    <Route
+                      path="/emergency"
+                      element={<Emergency socket={socket} />}
+                    />
                     <Route path="/profile" element={<UserProfile />} />
                     <Route path="/news" element={<News />} />
                     <Route path="/store" element={<StoreProfile />}>
@@ -113,7 +120,6 @@ const App = () => {
           }
         >
           <Navbar />
-          
         </div>
 
         <div className="left-1/2 bottom-1 -translate-x-1/2 absolute lg:hidden cursor-pointer">

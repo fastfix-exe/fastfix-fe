@@ -6,7 +6,7 @@ import ConfirmButton from "../../Components/Button/ConfirmButton";
 import userApi from "../../API/Services/userApi";
 import StoreCardEmergency from "../../Components/Card/StoreCardEmergency";
 
-const Emergency = () => {
+const Emergency = ({socket}) => {
   const [bike, setBike] = useState(true);
   const [showStores, setShowStores] = useState(false);
   const [stores, setStores] = useState([]);
@@ -33,6 +33,70 @@ const Emergency = () => {
 
     getCustomerRequest();
   }, []);
+
+  useEffect(() => {
+    const getCustomerRequest = async () => {
+      try {
+        const responseComment = await userApi.getCustomerEmergencyRequest();
+        if (responseComment?.status === 200) {
+          if (responseComment.data) {
+            SetRequestStatus(responseComment.data.status);
+            setRequestInformation(responseComment.data);
+          }
+        } else {
+          console.log("No comment");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    socket.on("changed-request", (data) => {
+      console.log(data);
+      getCustomerRequest();
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("employee-change-coordinates", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
+
+  useEffect(() => {
+    if (requestStatus === 1) {
+      const updateCordiation = setInterval(async () => {
+        try {
+          let cordinate = {};
+
+          navigator.geolocation.getCurrentPosition((position) => {
+            cordinate = ({
+              longtitude: position.coords.longitude,
+              latitude: position.coords.latitude,
+            });
+          });
+
+          const responseComment = await userApi.changeCustomerPosition({
+            requestId: requestInformation.id,
+            coordinates: `${cordinate.longitude}, ${cordinate.latitude}`
+
+          });
+          if (responseComment?.status === 200) {
+            if (responseComment.data) {
+              SetRequestStatus(responseComment.data.status);
+              setRequestInformation(responseComment.data);
+            }
+          } else {
+            console.log("No comment");
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }, 10000);
+
+      return clearInterval(updateCordiation);
+    }
+  }, [requestStatus, requestInformation.id]);
 
   const getStores = () => {
     setShowStores(true);
