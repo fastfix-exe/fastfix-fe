@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import userApi from "../../API/Services/userApi";
 import StoreCard from "../../Components/Card/StoreCard";
 import { useNavigate } from "react-router-dom";
+import StoreCardRow from "../../Components/Card/StoreCardRow";
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user.user);
@@ -39,7 +40,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="pb-20">
       <div className="overflow-hidden w-full my-4">
         <TextInput placeholder="Search" value={search} onChange={getSearch} />
       </div>
@@ -52,11 +53,11 @@ const Dashboard = () => {
       )}
       <div>
         <h1 className="py-2">Stores near you</h1>
-        <div className="grid grid-cols-3 gap-4 mb-20">
+        <div className="">
           {stores &&
             stores.length > 0 &&
             stores.map((store) => {
-              return <StoreCard key={store.id} store={store} onClick={() => navigate(`/store/${store.id}`)}/>;
+              return <StoreCardRow key={store.id} store={store} onClick={() => navigate(`/store/${store.id}`)}/>;
             })}
         </div>
       </div>
