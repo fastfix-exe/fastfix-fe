@@ -74,11 +74,38 @@ const userApi = {
     return axiosClient.get(url);
   },
 
+  sendEmergencyRequest: (data) => {
+    const url = `customer/request`;
+    return axiosClient.post(url, {
+      userId: data.userId,
+      storeId: data.storeId,
+      status: data.status,
+    });
+  },
+
+  getCustomerEmergencyRequest: () => {
+    const url = `customer/request/latest`;
+    return axiosClient.get(url);
+  },
+
+  getStoreEmergencyRequests: (data) => {
+    const url = `customer/request/store/${data.storeId}`;
+    return axiosClient.get(url);
+  },
+
+  updateEmergencyRequest: (data) => {
+    const url = `request`;
+    return axiosClient.put(url, {
+      id: data.id,
+      status: data.status,
+    });
+  },
+
   ratingStore: (data) => {
     const url = `customer/store/rating/${data.storeId}`;
     return axiosClient.post(url, {
       rating: data.rating,
-    })
+    });
   },
 
   getCurrentRating: (data) => {
