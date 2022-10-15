@@ -3,9 +3,8 @@ import Map, { Layer, Marker, NavigationControl, Source } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useEffect } from "react";
 import { FaUser, FaStoreAlt } from "react-icons/fa";
-import { AiFillPhone } from "react-icons/ai";
 
-const UserMap = (props) => {
+const EmployeeMap = (props) => {
   const [userLocation, setUserLocation] = useState({
     longitude: 0,
     latitude: 0,
@@ -41,6 +40,7 @@ const UserMap = (props) => {
         )
           .then((response) => response.json())
           .then((data) => {
+            console.log(data);
             const legs = data.routes[0].legs;
             const steps = legs[0].steps;
             const l = [];
@@ -92,8 +92,8 @@ const UserMap = (props) => {
           </div>
         </Marker>
         <Marker
-          latitude={userLocation.latitude}
-          longitude={userLocation.longitude}
+          latitude={props.lat}
+          longitude={props.lng}
           anchor="bottom"
         >
           <div className="text-red-500 text-2xl">
@@ -117,48 +117,8 @@ const UserMap = (props) => {
         </Source>
         <NavigationControl position="bottom-right" />
       </Map>
-      {props.store ? (
-        <div className="absolute bottom-0 left-0 w-full h-40 bg-white p-1 rounded-t-xl">
-          <div className="flex items-center mt-8">
-            <div className="rounded-full w-16 overflow-hidden mr-2">
-              <img src={props.store.avatarPicture} alt="a" />
-            </div>
-            <div className="w-1/2">
-              <div>{props.store.storeName.toUpperCase()}</div>
-              <div className="text-gray-500">
-                {props.store.distance.toFixed(2)} Km
-              </div>
-            </div>
-            <div className="flex items-center text-orange text-2xl ml-2">
-              <div
-                className="bg-black rounded-full p-2 cursor-pointer"
-                onClick={() =>
-                  window.open(
-                    `tel:+${props.store.phoneNumber}`,
-                    "",
-                    "width=400,height=400"
-                  )
-                }
-              >
-                <AiFillPhone />
-              </div>
-            </div>
-          </div>
-        </div>
-      ) : (
-        <div className="absolute bottom-0 left-0 w-full h-32 bg-white p-1 rounded-t-xl">
-          <div className="flex justify-evenly mt-4">
-            <div>
-              <button onClick={props.arrived} className="bg-emerald-500 text-white p-2 rounded-lg cursor-pointer shadow-md hover:shadow-lg">Arrived</button>
-            </div>
-            <div>
-            <button onClick={props.resetStatus} className="bg-rose-500 text-white p-2 rounded-lg cursor-pointer shadow-md hover:shadow-lg">Rejected</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };
 
-export default UserMap;
+export default EmployeeMap;

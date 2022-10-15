@@ -6,10 +6,11 @@ import { RiMotorbikeFill } from "react-icons/ri";
 import { FaCarSide } from "react-icons/fa";
 import { useState } from "react";
 import userApi from "../../API/Services/userApi";
-
-const user = localStorage.getItem("USER");
+import { useSelector } from "react-redux";
 
 const StoreCardRow = (props) => {
+  const user = useSelector((state) => state.user.user);
+
   const [openConfirmStore, setOpenConfirmStore] = useState(false);
 
   const customStar = {
@@ -37,17 +38,18 @@ const StoreCardRow = (props) => {
 
   const acceptEmergencyCalling = async () => {
     try {
-      const currentUser = JSON.parse(user).loginUser;
-      console.log(JSON.parse(user));
-      const responseComment = await userApi.sendEmergencyRequest({
-        userId: currentUser.id,
-        storeId: props.store.id,
-        status: 0,
-      });
-      if (responseComment?.status === 200) {
-        props.changeRequestStatus(0);
-      } else {
-        console.log("No comment");
+      if (user) {
+        const currentUser = user.loginUser;
+        const responseComment = await userApi.sendEmergencyRequest({
+          userId: currentUser.id,
+          storeId: props.store.id,
+          status: 0,
+        });
+        if (responseComment?.status === 200) {
+          props.changeRequestStatus(0);
+        } else {
+          console.log("No comment");
+        }
       }
     } catch (error) {
       console.log(error);

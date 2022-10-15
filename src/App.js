@@ -18,6 +18,7 @@ import StoreDashboard from "./Pages/Dashboard/StoreDashboard";
 import StoreEmergency from "./Pages/Emergency/StoreEmergency";
 
 import { io } from "socket.io-client";
+import EmployeeEmergency from "./Pages/Emergency/EmployeeEmergency";
 
 const socket = io("https://fastfix-core-service.herokuapp.com");
 
@@ -78,19 +79,48 @@ const App = () => {
                   </>
                 ) : (
                   <>
-                    <Route path="/" element={<Navigate to="/dashboard" />} />
-                    <Route
-                      path="/login"
-                      element={<Navigate to="/dashboard" />}
-                    />
-                    <Route path="/dashboard" element={<StoreDashboard />} />
-                    <Route path="/search" element={<SearchStore />} />
-                    <Route path="/emergency" element={<StoreEmergency />} />
-                    <Route path="/profile" element={<StorePersonalProfile />} />
-                    <Route path="/news" element={<News />} />
-                    <Route path="/store" element={<StoreProfile />}>
-                      <Route path=":id" element={<StoreProfile />} />
-                    </Route>
+                    {JSON.parse(user).loginStore.employeeName ? (
+                      <>
+                        <Route
+                          path="/"
+                          element={<Navigate to="/emergency" />}
+                        />
+                        <Route
+                          path="/login"
+                          element={<Navigate to="/emergency" />}
+                        />
+                        <Route
+                          path="/emergency"
+                          element={<EmployeeEmergency socket={socket} />}
+                        />
+                        <Route
+                          path="/profile"
+                          element={<StorePersonalProfile />}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        <Route
+                          path="/"
+                          element={<Navigate to="/dashboard" />}
+                        />
+                        <Route
+                          path="/login"
+                          element={<Navigate to="/dashboard" />}
+                        />
+                        <Route path="/dashboard" element={<StoreDashboard />} />
+                        <Route path="/search" element={<SearchStore />} />
+                        <Route path="/emergency" element={<StoreEmergency />} />
+                        <Route
+                          path="/profile"
+                          element={<StorePersonalProfile />}
+                        />
+                        <Route path="/news" element={<News />} />
+                        <Route path="/store" element={<StoreProfile />}>
+                          <Route path=":id" element={<StoreProfile />} />
+                        </Route>
+                      </>
+                    )}
                   </>
                 )}
               </>

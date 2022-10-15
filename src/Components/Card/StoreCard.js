@@ -23,7 +23,7 @@ const StoreCard = (props) => {
         <img src={props.store.avatarPicture} alt="img" />
       </div>
       <div className="flex items-center">
-        <p className="truncate text-sm">
+        <p className="truncate text-xl">
           {props.store.storeName.toUpperCase()}
         </p>
       </div>

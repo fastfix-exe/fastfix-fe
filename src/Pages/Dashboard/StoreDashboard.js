@@ -9,6 +9,7 @@ const StoreDashboard = () => {
   const user = useSelector((state) => state.user.user);
   const [subs, setSubs] = useState([]);
   const [selectedSub, setSelectedSub] = useState(0);
+  console.log(user);
 
   useEffect(() => {
     const getSubList = async () => {
