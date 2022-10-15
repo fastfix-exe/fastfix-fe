@@ -1,22 +1,29 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import userApi from "../../API/Services/userApi";
-import { BsStarHalf } from "react-icons/bs";
+import { BsStarHalf, BsLink45Deg } from "react-icons/bs";
 import {
   AiFillPhone,
   AiFillMail,
   AiTwotoneStar,
   AiOutlineStar,
+  AiOutlineSend,
 } from "react-icons/ai";
 import { FaWrench } from "react-icons/fa";
 import ReactStars from "react-rating-stars-component";
 import { MdLocationOn } from "react-icons/md";
 import UserMap from "../../Components/UserMap/UserMap";
+import { useSelector } from "react-redux";
+import TextInput from "../../Components/Input/TextInput";
+import ConfirmButton from "../../Components/Button/ConfirmButton";
 
 const StoreProfile = () => {
+  const user = useSelector((state) => state.user.user);
   const navigate = useNavigate();
   const [store, setStore] = useState();
   const [rating, setRating] = useState();
+  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
   let params = useParams();
 
   const [openMap, setOpenMap] = useState(false);
@@ -32,27 +39,71 @@ const StoreProfile = () => {
     filledIcon: <AiTwotoneStar />,
   };
 
+  const getComment = (e) => {
+    setComment(e.target.value);
+  };
+
+  const postComment = async () => {
+    try {
+      const response = await userApi.postComment({
+        storeId: params.id,
+        content: comment,
+      });
+      if (response?.status === 200) {
+        console.log(response.data);
+        setComments(response.data)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setComment("");
+  };
+
   useEffect(() => {
-    const checkData = async () => {
+    const checkData = () => {
       if (!params) {
         navigate("/dashboard");
       } else {
         try {
-          const response = await userApi.getStoreById(params.id);
-          if (response?.status === 200) {
-            const cord = response.data.coordinates.split(", ");
-            setLng(cord[1]);
-            setLat(cord[0]);
-            setRating({ ...customStar, value: response.data.rating });
-            setStore(response.data);
-          }
+          navigator.geolocation.getCurrentPosition(async (position) => {
+            const response = await userApi.getStoreById({
+              storeId: params.id,
+              latitude: position.coords.latitude,
+              longtitude: position.coords.longitude,
+            });
+            if (response?.status === 200) {
+              // console.log(response.data);
+              const cord = response.data.coordinates.split(", ");
+              setLng(cord[1]);
+              setLat(cord[0]);
+              setRating({ ...customStar, value: response.data.rating });
+              setStore(response.data);
+            }
+          });
         } catch (error) {
           console.log(error);
         }
       }
     };
 
+    const getComments = async () => {
+      try {
+        const responseComment = await userApi.getStoreComment({
+          storeId: params.id,
+        });
+        if (responseComment?.status === 200) {
+          setComments(responseComment.data);
+        } else {
+          console.log("No comment");
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
     checkData();
+
+    getComments();
   }, []);
 
   return (
@@ -69,7 +120,7 @@ const StoreProfile = () => {
                   <img
                     src={store.avatarPicture}
                     alt="a"
-                    className="w-48 bg-white rounded-full"
+                    className="w-48 bg-white rounded-full border border-1 border-black p-1"
                   />
                 </div>
                 <div>
@@ -97,6 +148,22 @@ const StoreProfile = () => {
                       <AiFillPhone className="text-xl" />
                     </div>
                     {store.phoneNumber}
+                    <div>
+                      <BsLink45Deg />
+                    </div>
+                  </div>
+                  <hr />
+                  <div
+                    className="flex items-center text-xl py-4 cursor-pointer hover:shadow-md"
+                    onClick={() => setOpenMap(true)}
+                  >
+                    <div className="rounded-full p-1 bg-orange text-white mr-3">
+                      <MdLocationOn className="text-xl" />
+                    </div>
+                    <div className="underline">See store on map</div>
+                    <div>
+                      <BsLink45Deg />
+                    </div>
                   </div>
                   <hr />
                   <div className="flex items-center text-xl py-4">
@@ -110,18 +177,60 @@ const StoreProfile = () => {
                     <div className="rounded-full p-1 bg-orange text-white mr-3">
                       <FaWrench className="text-xl" />
                     </div>
-                    {store.emergency.type}
+                    {store.emergency.type.toUpperCase()}
                   </div>
                   <hr />
-                  <div
-                    className="flex items-center text-xl py-4 cursor-pointer hover:shadow-md"
-                    onClick={() => setOpenMap(true)}
-                  >
-                    <div className="rounded-full p-1 bg-orange text-white mr-3">
-                      <MdLocationOn className="text-xl" />
+                </div>
+                <div className="my-4">
+                  <h1>Comment</h1>
+                </div>
+                <hr />
+                <div className="mt-1">
+                  <div className="flex items-center">
+                    <div className="mr-2">
+                      <img
+                        className="rounded-full w-12"
+                        src={user.loginUser.avatarPicture}
+                        alt="a"
+                      />
                     </div>
-                    <div className="underline">See store on map</div>
+                    <div className="w-full">
+                      <TextInput
+                        name="comment"
+                        value={comment}
+                        onChange={getComment}
+                        placeholder="Comment"
+                      />
+                    </div>
+                    <div
+                      onClick={postComment}
+                      className="ml-4 p-2 bg-orange text-white rounded-full cursor-pointer shadow-md hover:shadow-lg"
+                    >
+                      <AiOutlineSend />
+                    </div>
                   </div>
+                </div>
+                <hr className="my-2" />
+                <div>
+                  {comments &&
+                    comments.length > 0 &&
+                    comments.map((comment) => {
+                      return (
+                        <div className="flex items-center gap-2 my-4">
+                          <div>
+                            <img
+                              className="rounded-full w-12"
+                              src={comment.avatar}
+                              alt="a"
+                            />
+                          </div>
+                          <div>
+                            <div className="font-bold">{comment.name}</div>
+                            <div>{comment.content}</div>
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
               </div>
             </div>
@@ -130,7 +239,7 @@ const StoreProfile = () => {
       )}
       {openMap && (
         <div>
-          <UserMap lat={lat} lng={lng} />
+          <UserMap lat={lat} lng={lng} store={store} />
         </div>
       )}
     </div>
