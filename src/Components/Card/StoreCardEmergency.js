@@ -63,7 +63,7 @@ const StoreCardRow = (props) => {
                   "width=400,height=400"
                 )
               }
-              className="rounded-md bg-orange text-white p-1 hover:shadow-md"
+              className="rounded-md bg-orange text-white p-1 hover:shadow-md text-sm"
             >
               Call now
             </button>
