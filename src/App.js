@@ -19,6 +19,7 @@ import StoreEmergency from "./Pages/Emergency/StoreEmergency";
 
 import { io } from "socket.io-client";
 import EmployeeEmergency from "./Pages/Emergency/EmployeeEmergency";
+import History from "./Pages/History/History";
 
 const socket = io("https://fastfix-core-service.herokuapp.com");
 
@@ -109,7 +110,7 @@ const App = () => {
                           element={<Navigate to="/dashboard" />}
                         />
                         <Route path="/dashboard" element={<StoreDashboard />} />
-                        <Route path="/search" element={<SearchStore />} />
+                        <Route path="/history" element={<History />} />
                         <Route path="/emergency" element={<StoreEmergency />} />
                         <Route
                           path="/profile"

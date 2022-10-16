@@ -88,12 +88,15 @@ const EmployeeEmergency = ({ socket }) => {
 
   return (
     <div>
+      <div className="mt-2 mb-4">
+        <h1 className="text-center text-4xl">Request</h1>
+      </div>
       <>
         {loadCord ? (
           <EmployeeMap lng={lng} lat={lat} />
         ) : (
           <div className="h-96 flex items-center justify-center">
-            <h1 className="text-2xl text-center">No requests</h1>
+            <h1 className="text-2xl text-center">There's no requests at the moment</h1>
           </div>
         )}
       </>
